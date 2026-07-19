@@ -1,0 +1,234 @@
+{
+  "info": {
+    "_postman_id": "2819162f-69c2-4758-a28d-9bc6a0c46f1c",
+    "name": "lessons",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56053649",
+    "_collection_link": "https://go.postman.co/collection/56053649-2819162f-69c2-4758-a28d-9bc6a0c46f1c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "add lesson to course",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17x8}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "video",
+              "type": "file",
+              "uuid": "10736fe9-b762-48c0-a45e-964b7249f635",
+              "src": "postman-cloud:///1f17b15e-2cf4-4480-84af-ec4f21825f56"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/api/lessons?title=sssssssss&course_id=5&order=1",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "lessons"
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "sssssssss"
+            },
+            {
+              "key": "course_id",
+              "value": "5"
+            },
+            {
+              "key": "order",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update lesson in specefic course",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17x8}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "_method",
+              "type": "text",
+              "uuid": "dc818111-dea3-4a0f-b3a0-56a807958043",
+              "value": "PATCH"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/api/lessons/10?title=nnnnnnnnnnnnn",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "lessons",
+            "10"
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "nnnnnnnnnnnnn"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "show lesson",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17x8}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/lessons/10",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "lessons",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete lesson",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17x8}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/lessons/9",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "lessons",
+            "9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "show lessons in any course",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17x8}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/courses/5/lesson",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "courses",
+            "5",
+            "lesson"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_secret_17x8",
+      "secret": true
+    }
+  ]
+}

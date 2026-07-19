@@ -1,0 +1,201 @@
+{
+  "info": {
+    "_postman_id": "b83a9914-b748-492a-abbf-2cfb62e61a66",
+    "name": "categories",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56053649",
+    "_collection_link": "https://go.postman.co/collection/56053649-b83a9914-b748-492a-abbf-2cfb62e61a66?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "add category",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0irh}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/categories?name=programming6",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "categories"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "programming6"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete category",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0irh}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/categories/2",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "categories",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "show category",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0irh}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/categories/4",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "categories",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "show categories",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0044}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/categories",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "show category's courses",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0x2j}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/api/category/4/courses",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "category",
+            "4",
+            "courses"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_secret_0x2j",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0044",
+      "secret": true
+    }
+  ]
+}
