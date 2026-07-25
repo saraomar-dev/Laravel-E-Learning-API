@@ -47,7 +47,7 @@ Route::get('/pending_courses',[CourseController::class,'show_pending_courses'])-
 
 /*category routes*/
 Route::get('category/{category}/courses',[CategoryController::class,'show_coursesOfCategory'])->middleware('auth:sanctum');
-Route::apiResource('categories',CategoryController::class)->only(['store','destroy'])->middleware(['auth:sanctum', 'isAdmin']);
+Route::apiResource('categories',CategoryController::class)->only(['store','destroy','update'])->middleware(['auth:sanctum', 'isAdmin']);
 Route::apiResource('categories',CategoryController::class)->only(['show','index'])->middleware('auth:sanctum');
 
 /*notification routes*/
