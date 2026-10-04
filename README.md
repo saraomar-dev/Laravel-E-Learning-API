@@ -305,7 +305,6 @@ The notification architecture keeps user-facing updates separate from the core b
 
 ---
 
-
 # 🛡️ Authorization & Middleware
 
 Role-based middleware is used to protect routes according to the authenticated user's role.
@@ -471,8 +470,8 @@ The collection can be used to test:
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
-cd your-repository
+git clone https://github.com/saraomar-dev/Laravel-E-Learning-API.git
+cd Laravel-E-Learning-API
 ```
 
 ## 2. Install Dependencies
@@ -577,5 +576,11 @@ Potential extensions include:
 * Payment integration.
 * Redis-based production queues.
 * Dockerized development environment.
+
+  👩‍💻 Author
+
+Sara Omar
+
+Backend-focused developer building practical RESTful APIs with Laravel and PHP.
 * CI/CD pipeline.
 * Production deployment.
