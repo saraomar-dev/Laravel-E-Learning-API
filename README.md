@@ -1,59 +1,581 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 E-Learning RESTful API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge\&logo=laravel\&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge\&logo=php\&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge\&logo=mysql\&logoColor=white)](https://mysql.com)
+[![Postman](https://img.shields.io/badge/Postman-Documented-FF6C37?style=for-the-badge\&logo=postman\&logoColor=white)](https://postman.com)
 
-## About Laravel
+A role-based **E-Learning RESTful API** built with **Laravel 11**, **PHP 8.2+**, and **MySQL**, designed to manage an online learning platform with separate Admin, Instructor, and Student workflows.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The application implements authentication, role-based authorization, instructor approval, course management, lessons, student enrollment, file uploads, notifications, pagination, API Resources, Form Requests, and protected access to learning resources.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📖 API Documentation
 
-## Learning Laravel
+The API can be explored and manually tested using the provided Postman collection.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* 📁 **Postman Collection:** `Add your Postman link here`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The collection covers authentication, users, courses, lessons, enrollments, and notifications.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# ✨ Core Features
 
-### Premium Partners
+## 🔐 Authentication
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+The API provides secure authentication for platform users.
 
-## Contributing
+Users can:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Register.
+* Login.
+* Logout.
+* Retrieve their authenticated profile.
+* Update profile information.
+* Upload profile images.
+* Update phone and personal information.
 
-## Code of Conduct
+Authentication is implemented using **Laravel Sanctum** and protected API routes.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+# 👥 Role-Based System
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The platform has three main roles:
 
-## License
+```text
+                 ┌─────────────┐
+                 │    Admin    │
+                 └──────┬──────┘
+                        │
+              Approves / Manages
+                        │
+          ┌─────────────┴─────────────┐
+          ↓                           ↓
+   ┌─────────────┐             ┌─────────────┐
+   │  Instructor │             │   Student   │
+   └─────────────┘             └─────────────┘
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 👨‍💼 Admin
+
+Responsible for platform-level management, including:
+
+* Managing users.
+* Reviewing instructor applications.
+* Approving or rejecting instructors.
+* Managing courses where authorized.
+* Managing enrollments where authorized.
+
+### 👨‍🏫 Instructor
+
+Instructors can:
+
+* Create courses after receiving approval.
+* Manage their own courses.
+* Add and manage lessons.
+* View students enrolled in their courses.
+* Manage course learning content.
+
+### 👨‍🎓 Student
+
+Students can:
+
+* Browse available courses.
+* Enroll in courses.
+* View their enrolled courses.
+* Access lessons for courses they are enrolled in.
+* Receive relevant notifications.
+
+---
+
+# 🔄 Instructor Approval Workflow
+
+One of the main business workflows of the application is the instructor approval process.
+
+An instructor cannot immediately operate as an active course creator.
+
+### Workflow
+
+```text
+Instructor Registration
+        ↓
+Instructor Account
+        ↓
+Pending Approval
+        ↓
+Admin Reviews Application
+        ↓
+   ┌────┴────┐
+   ↓         ↓
+Approved   Rejected
+   ↓
+Instructor Can
+Create Courses
+```
+
+The approval state controls whether an instructor is allowed to perform instructor-specific operations.
+
+### Notifications
+
+Important approval actions trigger notifications so the instructor can be informed about the result of the review.
+
+---
+
+# 📚 Course Management
+
+Courses are the main learning resources of the platform.
+
+A course is associated with:
+
+* An instructor.
+* A category.
+* Multiple lessons.
+* Enrolled students.
+
+### Course Workflow
+
+```text
+Approved Instructor
+        ↓
+Create Course
+        ↓
+Validate Course Data
+        ↓
+Course Created
+        ↓
+Add Lessons
+        ↓
+Students Can Enroll
+        ↓
+Students Access Learning Content
+```
+
+Courses are protected using authentication and authorization rules to ensure that instructors can manage their own courses.
+
+---
+
+# 🗂️ Categories
+
+Courses are organized through categories.
+
+The system supports the relationship:
+
+```text
+Category
+   │
+   ├── Course
+   ├── Course
+   └── Course
+```
+
+This provides a structured way to organize and retrieve courses.
+
+---
+
+# 🎬 Lessons
+
+Courses contain multiple lessons.
+
+Lessons can include uploaded learning media such as:
+
+* Video files.
+* Images.
+* Other supported lesson resources.
+
+### Lesson Workflow
+
+```text
+Instructor
+    ↓
+Select Own Course
+    ↓
+Create Lesson
+    ↓
+Upload Lesson Media
+    ↓
+Lesson Belongs to Course
+    ↓
+Enrolled Student
+    ↓
+Access Learning Content
+```
+
+Lesson access is controlled according to the user's role and relationship with the course.
+
+---
+
+# 🎓 Enrollment System
+
+Students can enroll in courses through the enrollment API.
+
+Only students are allowed to create their own enrollments.
+
+The authenticated user's ID is taken from the authentication context rather than being accepted from the request body.
+
+This prevents a user from creating an enrollment on behalf of another user.
+
+---
+
+## 🛡️ Enrollment Authorization
+
+Enrollment operations are protected according to the user's role and relationship with the course.
+
+Examples include:
+
+* Students can create enrollments.
+* Students can view their enrolled courses.
+* Instructors can view students enrolled in their courses.
+* Administrators can manage enrollment records where authorized.
+* Users cannot access unrelated enrollment records.
+
+---
+
+# 🚫 Duplicate Enrollment Prevention
+
+A student should not be able to enroll in the same course multiple times.
+
+The enrollment workflow validates the student's existing relationship with the course before creating a new enrollment.
+
+```text
+Student
+   ↓
+Request Enrollment
+   ↓
+Already Enrolled?
+ ┌──────┴──────┐
+ ↓             ↓
+ YES           NO
+ ↓             ↓
+Reject       Create
+Request      Enrollment
+```
+
+This keeps enrollment data consistent and prevents duplicate records.
+
+---
+
+# 👨‍🏫 Instructor → Student Workflow
+
+Instructors can view the students enrolled in their own courses.
+
+The relationship follows:
+
+```text
+Instructor
+    ↓
+Own Course
+    ↓
+Enrollments
+    ↓
+Students
+```
+
+This allows instructors to manage and review the learners participating in their courses without exposing unrelated student/course relationships.
+
+---
+
+# 🔔 Notifications
+
+The application includes a notification system for important platform events.
+
+Notifications can be associated with the authenticated user and retrieved through the API.
+
+Examples of notification-driven workflows include:
+
+### Instructor Approval
+
+```text
+Instructor Application
+        ↓
+Admin Decision
+        ↓
+Notification
+        ↓
+Instructor
+```
+
+### Course / Learning Events
+
+Relevant learning-related events can notify users when important actions occur.
+
+The notification architecture keeps user-facing updates separate from the core business logic.
+
+---
+
+
+# 🛡️ Authorization & Middleware
+
+Role-based middleware is used to protect routes according to the authenticated user's role.
+
+Examples:
+
+```text
+Admin
+Instructor
+Student
+```
+
+Authorization rules ensure that users can only perform actions appropriate to their role and relationship with the resource.
+
+Examples include:
+
+* Only approved instructors can perform instructor-specific course operations.
+* Students create their own enrollments.
+* Instructors manage their own courses and lessons.
+* Students access learning resources according to their enrollment.
+* Administrators have platform-level management capabilities.
+
+---
+
+# 📄 API Resources
+
+Laravel API Resources are used to transform database models into structured JSON responses.
+
+This keeps the API response format consistent and prevents directly exposing database models.
+
+Resources are used across major modules such as:
+
+* Users
+* Courses
+* Lessons
+* Enrollments
+* Notifications
+
+---
+
+# ✅ Form Requests & Validation
+
+Dedicated Laravel Form Request classes are used to validate incoming requests.
+
+Validation is separated from controllers to keep the application's request handling clean and maintainable.
+
+Validation covers areas such as:
+
+* User registration.
+* Profile updates.
+* Course creation.
+* Lesson creation.
+* Enrollment requests.
+* Uploaded files.
+
+Invalid requests return appropriate Laravel validation responses.
+
+---
+
+# 📤 File Uploads
+
+The API supports file uploads for learning resources and user content.
+
+Supported use cases include:
+
+* Profile images.
+* Course-related media.
+* Lesson images.
+* Lesson videos.
+
+Laravel Storage is used to manage uploaded files.
+
+---
+
+# 📑 Pagination
+
+Pagination is implemented for collections that may contain large numbers of records.
+
+Examples include:
+
+* Courses.
+* Lessons.
+* Enrollments.
+* Other collection-based endpoints.
+
+This prevents unnecessarily large API responses and makes the API more suitable for frontend consumption.
+
+---
+
+# 🔗 Database Relationships
+
+The application uses Eloquent relationships to model the learning platform.
+
+### User Relationships
+
+```text
+User
+ ├── Profile
+ ├── Courses
+ ├── Enrollments
+ └── Notifications
+```
+
+### Course Relationships
+
+```text
+Course
+ ├── Instructor
+ ├── Category
+ ├── Lessons
+ └── Enrollments
+```
+
+### Enrollment Relationships
+
+```text
+User
+   ↕
+Enrollment
+   ↕
+Course
+```
+
+These relationships allow the API to retrieve and authorize learning data according to the user's role and ownership.
+
+---
+
+# 📂 Core API Modules
+
+| Module             | Description                                                |
+| :----------------- | :--------------------------------------------------------- |
+| **Authentication** | Registration, login, logout, and authenticated user access |
+| **Profiles**       | Profile information, phone, and image management           |
+| **Users**          | Role-based user management                                 |
+| **Categories**     | Course categorization                                      |
+| **Courses**        | Course creation and management                             |
+| **Lessons**        | Course lesson and media management                         |
+| **Enrollments**    | Student enrollment and enrollment management               |
+| **Notifications**  | User notification retrieval and event-driven updates       |
+
+---
+
+# 🧪 API Testing
+
+The API can be manually tested using the provided **Postman Collection**.
+
+The collection can be used to test:
+
+* Authentication.
+* Role-based endpoints.
+* Instructor approval workflow.
+* Course management.
+* Lesson management.
+* Enrollment.
+* Authorization scenarios.
+* File uploads.
+* Notifications.
+
+---
+
+# 🚀 Getting Started
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repository.git
+cd your-repository
+```
+
+## 2. Install Dependencies
+
+```bash
+composer install
+```
+
+## 3. Configure Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure the database and other required environment variables inside `.env`.
+
+## 4. Run Migrations
+
+```bash
+php artisan migrate
+```
+
+## 5. Create Storage Link
+
+```bash
+php artisan storage:link
+```
+
+## 6. Start the Application
+
+```bash
+php artisan serve
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+# 🧰 Technologies
+
+* **PHP 8.2+**
+* **Laravel 11**
+* **MySQL**
+* **Laravel Sanctum**
+* **Eloquent ORM**
+* **Laravel Middleware**
+* **Laravel API Resources**
+* **Laravel Form Requests**
+* **Laravel Notifications**
+* **Laravel Events / Listeners**
+* **Laravel Queues**
+* **Laravel Storage**
+* **Postman**
+
+---
+
+# 📌 What This Project Demonstrates
+
+This project demonstrates practical backend development through a complete learning-platform workflow rather than simple CRUD operations.
+
+Key concepts include:
+
+* RESTful API development.
+* Authentication with Laravel Sanctum.
+* Role-based authorization.
+* Admin / Instructor / Student workflows.
+* Instructor approval system.
+* Course management.
+* Lesson management.
+* Student enrollment.
+* Duplicate enrollment prevention.
+* Enrollment-based access control.
+* Instructor ownership authorization.
+* File and media uploads.
+* Pagination.
+* API Resources.
+* Form Requests.
+* Eloquent relationships.
+* Notifications.
+* Event-driven workflows.
+* Queued background processing.
+* Middleware-based authorization.
+
+---
+
+## 🚧 Future Improvements
+
+Potential extensions include:
+
+* Automated Feature / Integration Tests.
+* Advanced course search and filtering.
+* Course sorting.
+* Course reviews and ratings.
+* Progress tracking.
+* Lesson completion tracking.
+* Certificates.
+* Payment integration.
+* Redis-based production queues.
+* Dockerized development environment.
+* CI/CD pipeline.
+* Production deployment.
