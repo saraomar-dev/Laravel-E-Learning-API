@@ -13,7 +13,7 @@ class ProfileController extends Controller
      * Display a listing of the resource.
      */
 
-    
+
     public function editProfile(UpdateMyProfileRequest $validated_data)
     {
         $user=auth()->user();
@@ -45,7 +45,7 @@ class ProfileController extends Controller
     {
         $user=auth()->user();
 
-        return response()->json(['your profile :'=> new UserResource($user)], 400);
+        return response()->json(['your profile :'=> new UserResource($user)], 200);
     }
     public function index()
     {

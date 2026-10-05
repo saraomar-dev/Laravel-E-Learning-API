@@ -120,7 +120,7 @@ class CourseController extends Controller
     //auth
     public function instructor_courses(User $user)
     {
-        if(auth()->user()->role==='instructor' && $course->user_id !== auth()->id()){
+        if(auth()->user()->role==='instructor' && auth()->id() !== auth()->id()){
     return response()->json(['message'=>'Unauthenticated'], 403);
     }
         $courses=$user->courses()->paginate(5);

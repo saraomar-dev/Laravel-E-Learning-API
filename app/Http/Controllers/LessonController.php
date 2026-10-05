@@ -52,7 +52,7 @@ class LessonController extends Controller
                                 'course_id'=>$data['course_id'],
         ]);
         $students=$course->students()->get();
-        Notification::send($students, new AddLessonNotification($course));
+        Notification::send($students, new AddLessonNotification($lesson));
         $lesson->load('course');
         return response()->json(['message'=>'lesson was added successfully',
                                 'lesson'=>new LessonResource($lesson)], 201);

@@ -1,0 +1,3567 @@
+{
+  "info": {
+    "_postman_id": "fac3ae3a-ca70-4068-a44a-9cbfb24d43f9",
+    "name": "E-Learning API",
+    "description": "# 🎓 E-Learning Platform RESTful API\n\nA role-based E-Learning RESTful API built with **Laravel 11**, **PHP 8.2+**, and **MySQL**.  \nProvides structured workflows for **Admins**, **Instructors**, and **Students**, featuring course moderation, ownership authorization, duplicate enrollment protection, queued notifications, and media uploads.\n\n---\n\n### 🧰 Tech Stack & Architecture\n\n- **Core & Framework:** PHP 8.2+ | Laravel 11\n    \n- **Database & ORM:** MySQL 8 | Eloquent ORM (Relationships & Eager Loading)\n    \n- **Authentication:** Laravel Sanctum (Stateful & Bearer Token Authentication)\n    \n- **Authorization & Security:** Custom Middleware, Role-Based Access Control (RBAC), and Ownership Policies\n    \n- **Background Processing:** Laravel Events, Queued Listeners, and Queue Workers\n    \n- **Notifications:** Laravel Notification System (Asynchronous updates for course reviews & new lessons)\n    \n- **Data Transformation & Validation:** Laravel API Resources (Consistent JSON responses) & Form Requests\n    \n- **File Management:** Laravel Storage (Handling profile avatars, lesson media, and video uploads)\n    \n\n---\n\n### ⚙️ Environment Variables Setup\n\nConfigure the following variables in your Postman Environment:\n\n| Variable | Description | Initial Value |\n| --- | --- | --- |\n| `base_url` | Root API URL | `http://127.0.0.1:8000/api` |\n| `auth_token` | Sanctum Bearer token | `Bearer token from login/register` |\n| `course_id` | Active Course ID for testing nested routes | `1` |\n| `lesson_id` | Active Lesson ID for media endpoints | `1` |\n\n---\n\n### 🔐 Authentication & Global Headers\n\nAll protected routes require a valid **Sanctum Bearer Token**.\n\n- **Type:** Bearer Token (`Bearer {{auth_token}}`)\n    \n- **Required Headers:**\n    \n    - `Accept`: `application/json`\n        \n    - `Content-Type`: `application/json` _(use_ `_multipart/form-data_` _for file uploads)_\n        \n\n---\n\n### 👥 Platform Roles & Workflows\n\n- **Admin:** Manages platform users and reviews/approves instructor course submissions.\n    \n- **Instructor:** Creates courses (set to `pending` by default), manages own lessons, and views enrolled students.\n    \n- **Student:** Browses approved courses, self-enrolls, and accesses learning content for enrolled courses.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56053649",
+    "_collection_link": "https://go.postman.co/collection/56053649-fac3ae3a-ca70-4068-a44a-9cbfb24d43f9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "show users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/users",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/users",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:54:46 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 2,\n      \"name\": \"sara\",\n      \"email\": \"saraamr12@gmail.com\",\n      \"role\": \"admin\",\n      \"phone number\": \"01280884285\",\n      \"image\": \"http://127.0.0.1:8000/storage/users/1NHqIJUBpHxqXsB321IQTIaeRungesbMG2KC3pB0.png\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"sara\",\n      \"email\": \"saraamr1256@gmail.com\",\n      \"role\": \"user\",\n      \"phone number\": null,\n      \"image\": null\n    },\n    {\n      \"id\": 4,\n      \"name\": \"sara\",\n      \"email\": \"saraamr12@gmail.com34\",\n      \"role\": \"user\",\n      \"phone number\": null,\n      \"image\": null\n    },\n    {\n      \"id\": 5,\n      \"name\": \"sara\",\n      \"email\": \"saraamr12@gmail.com342\",\n      \"role\": \"user\",\n      \"phone number\": null,\n      \"image\": null\n    },\n    {\n      \"id\": 6,\n      \"name\": \"sara\",\n      \"email\": \"saraamr121@gmail.com\",\n      \"role\": \"user\",\n      \"phone number\": null,\n      \"image\": null\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/users?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/users?page=5\",\n    \"prev\": null,\n    \"next\": \"http://127.0.0.1:8000/api/users?page=2\"\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 5,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=2\",\n        \"label\": \"2\",\n        \"page\": 2,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=3\",\n        \"label\": \"3\",\n        \"page\": 3,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=4\",\n        \"label\": \"4\",\n        \"page\": 4,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=5\",\n        \"label\": \"5\",\n        \"page\": 5,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/users?page=2\",\n        \"label\": \"Next &raquo;\",\n        \"page\": 2,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/users\",\n    \"per_page\": 5,\n    \"to\": 5,\n    \"total\": 23\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "add user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/users?name=fdkklgd&email=sara94782@gmail.com&password=12345678910&password confirmation=12345678910&role=student",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "fdkklgd"
+                },
+                {
+                  "key": "email",
+                  "value": "sara94782@gmail.com"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678910"
+                },
+                {
+                  "key": "password confirmation",
+                  "value": "12345678910"
+                },
+                {
+                  "key": "role",
+                  "value": "student"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "add user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/users?name=fdkklgd&email=sara94782@gmail.com&password=12345678910&password confirmation=12345678910&role=student",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "fdkklgd"
+                    },
+                    {
+                      "key": "email",
+                      "value": "sara94782@gmail.com"
+                    },
+                    {
+                      "key": "password",
+                      "value": "12345678910"
+                    },
+                    {
+                      "key": "password confirmation",
+                      "value": "12345678910"
+                    },
+                    {
+                      "key": "role",
+                      "value": "student"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:55:25 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": 26,\n    \"name\": \"fdkklgd\",\n    \"email\": \"sara94782@gmail.com\",\n    \"role\": \"student\",\n    \"phone number\": null,\n    \"image\": null\n  },\n  \"message\": \"created successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "show user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/users/26",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "26"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/users/26",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "26"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:55:44 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": 26,\n    \"name\": \"fdkklgd\",\n    \"email\": \"sara94782@gmail.com\",\n    \"role\": \"student\",\n    \"phone number\": null,\n    \"image\": null\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/users/3?email=saraamr1256@gmail.com",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "3"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "saraamr1256@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/users/1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "approve course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/approve_course/11",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "approve_course",
+                "11"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "approve course",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/approve_course/11",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "approve_course",
+                    "11"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:00:39 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"course was approved succussefully\",\n  \"course\": {\n    \"course_id\": 11,\n    \"course_name\": \"ksdfdkaa\",\n    \"descreption\": \"sdjfsajhjsakdfhj\",\n    \"price\": \"30\",\n    \"image\": \"http://127.0.0.1:8000/storage/courses/of6lHEhvaRuVzzAKmIvWk9BkCWQwpZ5yKIbkiM77.png\",\n    \"status\": \"active\",\n    \"category_id\": 10,\n    \"user_id\": 25\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "reject course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/reject_course/4",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "reject_course",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "auth": {
+              "type": "bearer"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/register?email=saraamrs12@gmail.com12&name=sara&password=12345678910&password confirmation=12345678910&role=instructor",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "saraamrs12@gmail.com12"
+                },
+                {
+                  "key": "name",
+                  "value": "sara"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678910"
+                },
+                {
+                  "key": "password confirmation",
+                  "value": "12345678910"
+                },
+                {
+                  "key": "role",
+                  "value": "instructor"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "register",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/register?email=saraamrs12@gmail.com12&name=sara&password=12345678910&password confirmation=12345678910&role=instructor",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "register"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "saraamrs12@gmail.com12"
+                    },
+                    {
+                      "key": "name",
+                      "value": "sara"
+                    },
+                    {
+                      "key": "password",
+                      "value": "12345678910"
+                    },
+                    {
+                      "key": "password confirmation",
+                      "value": "12345678910"
+                    },
+                    {
+                      "key": "role",
+                      "value": "instructor"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:50:50 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": 25,\n    \"name\": \"sara\",\n    \"email\": \"saraamrs12@gmail.com12\",\n    \"role\": \"instructor\",\n    \"phone number\": null,\n    \"image\": null\n  },\n  \"message\": \"registered successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "log in",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/login?email=saraamrs12@gmail.com&password=12345678910",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "saraamrs12@gmail.com"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678910"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "log in",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/login?email=saraamrs12@gmail.com1&password=12345678910",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "saraamrs12@gmail.com1"
+                    },
+                    {
+                      "key": "password",
+                      "value": "12345678910"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:53:04 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"log in successfully\",\n  \"user\": {\n    \"id\": 24,\n    \"name\": \"sara\",\n    \"email\": \"saraamrs12@gmail.com1\",\n    \"role\": \"student\",\n    \"phone number\": null,\n    \"image\": null\n  },\n  \"token\": \"15|XpZfd3PQ2FXOfnrOTXOzYVlZqkk9XZZGBLctInlx3c62a708\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "log out",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_secret_0tr1}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/logout",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "item": [
+        {
+          "name": "add category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/categories?name=programming11",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "programming11"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "add category",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/categories?name=programming11",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "programming11"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:56:30 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"created successfully\",\n  \"category\": {\n    \"id\": 10,\n    \"name\": \"programming11\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/categories/2",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/categories/10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "10"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show category",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/categories/10",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:56:51 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": 10,\n    \"name\": \"programming11\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show categories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/categories",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show categories",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/categories",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:57:05 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 3,\n      \"name\": \"programming1\"\n    },\n    {\n      \"id\": 4,\n      \"name\": \"programming2\"\n    },\n    {\n      \"id\": 5,\n      \"name\": \"programming3\"\n    },\n    {\n      \"id\": 6,\n      \"name\": \"programming4\"\n    },\n    {\n      \"id\": 7,\n      \"name\": \"programming5\"\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/categories?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/categories?page=2\",\n    \"prev\": null,\n    \"next\": \"http://127.0.0.1:8000/api/categories?page=2\"\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 2,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/categories?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/categories?page=2\",\n        \"label\": \"2\",\n        \"page\": 2,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/categories?page=2\",\n        \"label\": \"Next &raquo;\",\n        \"page\": 2,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/categories\",\n    \"per_page\": 5,\n    \"to\": 5,\n    \"total\": 8\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show category's courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/category/4/courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "category",
+                "4",
+                "courses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/categories/1?name=electro",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "electro"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "courses",
+      "item": [
+        {
+          "name": "show instructor's course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/instructor_courses/25/courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "instructor_courses",
+                "25",
+                "courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show instructor's course",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/instructor_courses/25/courses",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "instructor_courses",
+                    "25",
+                    "courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:04:46 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"course_id\": 10,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/V0ExyoDrNUlzs4KABqOk46lzXU9MsPjhCLIi8Hdo.png\",\n      \"status\": \"pending\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    },\n    {\n      \"course_id\": 11,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/of6lHEhvaRuVzzAKmIvWk9BkCWQwpZ5yKIbkiM77.png\",\n      \"status\": \"active\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/instructor_courses/25/courses?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/instructor_courses/25/courses?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/instructor_courses/25/courses?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/instructor_courses/25/courses\",\n    \"per_page\": 5,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show pending courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/pending_courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "pending_courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show pending courses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/pending_courses",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "pending_courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:01:16 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"course_id\": 9,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/m85NU9KxfJK7kfITUR0IuKHOhOAQD1fhHqHNOzYa.png\",\n      \"status\": \"pending\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    },\n    {\n      \"course_id\": 10,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/V0ExyoDrNUlzs4KABqOk46lzXU9MsPjhCLIi8Hdo.png\",\n      \"status\": \"pending\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/pending_courses?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/pending_courses?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/pending_courses?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/pending_courses\",\n    \"per_page\": 5,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show active courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/active_courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "active_courses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show my courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/my-courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "my-courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show my courses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/my-courses",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "my-courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:59:51 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"course_id\": 10,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/V0ExyoDrNUlzs4KABqOk46lzXU9MsPjhCLIi8Hdo.png\",\n      \"status\": \"pending\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    },\n    {\n      \"course_id\": 11,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/of6lHEhvaRuVzzAKmIvWk9BkCWQwpZ5yKIbkiM77.png\",\n      \"status\": \"pending\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/my-courses?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/my-courses?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/my-courses?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/my-courses\",\n    \"per_page\": 5,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete my course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/courses/2",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/courses/10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "10"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show course",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/courses/10",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "courses",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:59:18 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"course\": {\n    \"course_id\": 10,\n    \"course_name\": \"ksdfdkaa\",\n    \"descreption\": \"sdjfsajhjsakdfhj\",\n    \"price\": \"30\",\n    \"image\": \"http://127.0.0.1:8000/storage/courses/V0ExyoDrNUlzs4KABqOk46lzXU9MsPjhCLIi8Hdo.png\",\n    \"status\": \"pending\",\n    \"category_id\": 10,\n    \"user_id\": 25\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show courses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show courses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/courses",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:59:36 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"course_id\": 5,\n      \"course_name\": \"ssssssssssssssssssssss\",\n      \"descreption\": \"سسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/K7XwSNUk3R775DJBP46OYCDCCfCVILpNWG9M1iNW.png\",\n      \"status\": \"active\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    },\n    {\n      \"course_id\": 6,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/4O02OfNVt7mbJETQaRxosXk9aFCoUM9OK0MVBBuN.png\",\n      \"status\": \"active\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    },\n    {\n      \"course_id\": 7,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/xDIU8drVAXRi7dBjvSuIsE34MjS2aekZQCmffI3C.png\",\n      \"status\": \"active\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    },\n    {\n      \"course_id\": 8,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/E7tiO20uCD0mAFm8LnhfAJONHpd8VFawsCXS8doa.png\",\n      \"status\": \"active\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    },\n    {\n      \"course_id\": 9,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/m85NU9KxfJK7kfITUR0IuKHOhOAQD1fhHqHNOzYa.png\",\n      \"status\": \"pending\",\n      \"category_id\": 4,\n      \"user_id\": 20\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/courses?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/courses?page=2\",\n    \"prev\": null,\n    \"next\": \"http://127.0.0.1:8000/api/courses?page=2\"\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 2,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/courses?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/courses?page=2\",\n        \"label\": \"2\",\n        \"page\": 2,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/courses?page=2\",\n        \"label\": \"Next &raquo;\",\n        \"page\": 2,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/courses\",\n    \"per_page\": 5,\n    \"to\": 5,\n    \"total\": 7\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update my course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "_method",
+                  "value": "PATCH",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "postman-cloud:///1f17a516-abb5-4e80-b3e1-3e0ed6109c06"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/courses/5?descreption=سسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "5"
+              ],
+              "query": [
+                {
+                  "key": "descreption",
+                  "value": "سسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "postman-cloud:///1f175937-d282-4020-9623-fe959c242baf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/courses?course_name=ksdfdkaa&descreption=sdjfsajhjsakdfhj&price=30&category_id=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "course_name",
+                  "value": "ksdfdkaa"
+                },
+                {
+                  "key": "descreption",
+                  "value": "sdjfsajhjsakdfhj"
+                },
+                {
+                  "key": "price",
+                  "value": "30"
+                },
+                {
+                  "key": "category_id",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "add course",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "src": "postman-cloud:///1f175937-d282-4020-9623-fe959c242baf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{url}}/api/courses?course_name=ksdfdkaa&descreption=sdjfsajhjsakdfhj&price=30&category_id=10",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "courses"
+                  ],
+                  "query": [
+                    {
+                      "key": "course_name",
+                      "value": "ksdfdkaa"
+                    },
+                    {
+                      "key": "descreption",
+                      "value": "sdjfsajhjsakdfhj"
+                    },
+                    {
+                      "key": "price",
+                      "value": "30"
+                    },
+                    {
+                      "key": "category_id",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 01:58:35 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Course created successfully and waiting for approval.\",\n  \"course\": {\n    \"course_id\": 11,\n    \"course_name\": \"ksdfdkaa\",\n    \"descreption\": \"sdjfsajhjsakdfhj\",\n    \"price\": \"30\",\n    \"image\": \"http://127.0.0.1:8000/storage/courses/of6lHEhvaRuVzzAKmIvWk9BkCWQwpZ5yKIbkiM77.png\",\n    \"status\": \"pending\",\n    \"category_id\": \"10\",\n    \"user_id\": 25\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "enrollment",
+      "item": [
+        {
+          "name": "enroll course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments?course_id=11&user_id=26",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments"
+              ],
+              "query": [
+                {
+                  "key": "course_id",
+                  "value": "11"
+                },
+                {
+                  "key": "user_id",
+                  "value": "26"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "enroll course",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments?course_id=11&user_id=26",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments"
+                  ],
+                  "query": [
+                    {
+                      "key": "course_id",
+                      "value": "11"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "26"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:05:59 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"enrollment has been successfully\",\n  \"enrollment\": {\n    \"enrollment id\": 3,\n    \"course id\": \"11\",\n    \"user id\": 24\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show enrollments(admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show enrollments(admin)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:06:23 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"enrollment id\": 2,\n      \"course id\": 5,\n      \"user id\": 22\n    },\n    {\n      \"enrollment id\": 3,\n      \"course id\": 11,\n      \"user id\": 24\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/enrollments?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/enrollments?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/enrollments?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/enrollments\",\n    \"per_page\": 5,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show enrollment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments/3",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments",
+                "3"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show enrollment",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments/3",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments",
+                    "3"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:07:06 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"enrollment\": {\n    \"enrollment id\": 3,\n    \"course id\": 11,\n    \"user id\": 24\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete enrollment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments/1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show my courses(student)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments/my-courses",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments",
+                "my-courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show my courses(student)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments/my-courses",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments",
+                    "my-courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:08:08 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"course_id\": 11,\n      \"course_name\": \"ksdfdkaa\",\n      \"descreption\": \"sdjfsajhjsakdfhj\",\n      \"price\": \"30\",\n      \"image\": \"http://127.0.0.1:8000/storage/courses/of6lHEhvaRuVzzAKmIvWk9BkCWQwpZ5yKIbkiM77.png\",\n      \"status\": \"active\",\n      \"category_id\": 10,\n      \"user_id\": 25\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/enrollments/my-courses?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/enrollments/my-courses?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/enrollments/my-courses?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/enrollments/my-courses\",\n    \"per_page\": 10,\n    \"to\": 1,\n    \"total\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show my student in one course(instructor)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/enrollments/11/students",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "enrollments",
+                "11",
+                "students"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show my student in one course(instructor)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments/5/students",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments",
+                    "5",
+                    "students"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:08:20 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"You are not allowed to see this info\"\n}"
+            },
+            {
+              "name": "show my student in one course(instructor)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/enrollments/11/students",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "enrollments",
+                    "11",
+                    "students"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:11:54 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 24,\n      \"name\": \"sara\",\n      \"email\": \"saraamrs12@gmail.com1\",\n      \"role\": \"student\",\n      \"phone number\": null,\n      \"image\": null\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/enrollments/11/students?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/enrollments/11/students?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/enrollments/11/students?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/enrollments/11/students\",\n    \"per_page\": 10,\n    \"to\": 1,\n    \"total\": 1\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lessons",
+      "item": [
+        {
+          "name": "add lesson to course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": "postman-cloud:///1f17b15e-2cf4-4480-84af-ec4f21825f56"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/lessons?title=sssssssss&course_id=11&order=1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "lessons"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "sssssssss"
+                },
+                {
+                  "key": "course_id",
+                  "value": "11"
+                },
+                {
+                  "key": "order",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "add lesson to course",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "video",
+                      "type": "file",
+                      "src": "postman-cloud:///1f17b15e-2cf4-4480-84af-ec4f21825f56"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{url}}/api/lessons?title=sssssssss&course_id=11&order=1",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "lessons"
+                  ],
+                  "query": [
+                    {
+                      "key": "title",
+                      "value": "sssssssss"
+                    },
+                    {
+                      "key": "course_id",
+                      "value": "11"
+                    },
+                    {
+                      "key": "order",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:15:14 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"lesson was added successfully\",\n  \"lesson\": {\n    \"lesson id\": 12,\n    \"title\": \"sssssssss\",\n    \"order\": \"1\",\n    \"video\": \"http://127.0.0.1:8000/storage/videos/Nz4dyUh4oPb7ZRtOMOMQn6jG7fIXTq2sz8qbbB43.mp4\",\n    \"course id\": \"11\",\n    \"course_name\": \"ksdfdkaa\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update lesson in specefic course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "_method",
+                  "value": "PATCH",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/lessons/10?title=nnnnnnnnnnnnn",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "lessons",
+                "10"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "nnnnnnnnnnnnn"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete lesson",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/lessons/9",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "lessons",
+                "9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show lesson",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/lessons/12",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "lessons",
+                "12"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show lesson",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/lessons/12",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "lessons",
+                    "12"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:16:31 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"lesson\": {\n    \"lesson id\": 12,\n    \"title\": \"sssssssss\",\n    \"order\": 1,\n    \"video\": \"http://127.0.0.1:8000/storage/videos/Nz4dyUh4oPb7ZRtOMOMQn6jG7fIXTq2sz8qbbB43.mp4\",\n    \"course id\": 11,\n    \"course_name\": \"ksdfdkaa\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "show lessons in any course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{instructor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/courses/5/lesson",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "5",
+                "lesson"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notifications",
+      "item": [
+        {
+          "name": "all-notification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/all_notification",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "all_notification"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "all-notification",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/all_notification",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "all_notification"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:16:46 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"b82815a7-59b8-4652-82c1-5cf37ca7de94\",\n      \"type\": \"App\\\\Notifications\\\\NewCourseNotification\",\n      \"data\": {\n        \"title\": \"New Course\",\n        \"message\": \"A new course is waiting for approval.\",\n        \"course_id\": 11\n      },\n      \"read_at\": null,\n      \"created_at\": \"2026-10-05T01:58:35.000000Z\"\n    },\n    {\n      \"id\": \"79800c50-2d86-4a5a-90f9-65b883d72d1b\",\n      \"type\": \"App\\\\Notifications\\\\NewCourseNotification\",\n      \"data\": {\n        \"title\": \"New Course\",\n        \"message\": \"A new course is waiting for approval.\",\n        \"course_id\": 10\n      },\n      \"read_at\": null,\n      \"created_at\": \"2026-10-05T01:58:28.000000Z\"\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/all_notification?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/all_notification?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/all_notification?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/all_notification\",\n    \"per_page\": 10,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "unread_notifications",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/unread_notifications",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "unread_notifications"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "unread_notifications",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/unread_notifications",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "unread_notifications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:16:58 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"b82815a7-59b8-4652-82c1-5cf37ca7de94\",\n      \"type\": \"App\\\\Notifications\\\\NewCourseNotification\",\n      \"data\": {\n        \"title\": \"New Course\",\n        \"message\": \"A new course is waiting for approval.\",\n        \"course_id\": 11\n      },\n      \"read_at\": null,\n      \"created_at\": \"2026-10-05T01:58:35.000000Z\"\n    },\n    {\n      \"id\": \"79800c50-2d86-4a5a-90f9-65b883d72d1b\",\n      \"type\": \"App\\\\Notifications\\\\NewCourseNotification\",\n      \"data\": {\n        \"title\": \"New Course\",\n        \"message\": \"A new course is waiting for approval.\",\n        \"course_id\": 10\n      },\n      \"read_at\": null,\n      \"created_at\": \"2026-10-05T01:58:28.000000Z\"\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/unread_notifications?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/unread_notifications?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/unread_notifications?page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": null,\n        \"label\": \"Next &raquo;\",\n        \"page\": null,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/unread_notifications\",\n    \"per_page\": 10,\n    \"to\": 2,\n    \"total\": 2\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "mark notification as read",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/b82815a7-59b8-4652-82c1-5cf37ca7de94/read",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "b82815a7-59b8-4652-82c1-5cf37ca7de94",
+                "read"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "mark notification as read",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/b82815a7-59b8-4652-82c1-5cf37ca7de94/read",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "b82815a7-59b8-4652-82c1-5cf37ca7de94",
+                    "read"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:17:48 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"notification marked as read\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "mark all notifications as read",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/readAll",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "readAll"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "mark all notifications as read",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/readAll",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "readAll"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:17:57 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"all notifications marked as read\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "profile",
+      "item": [
+        {
+          "name": "show my profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/showProfile",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "showProfile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show my profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/showProfile",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "showProfile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:18:41 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"your profile :\": {\n    \"id\": 23,\n    \"name\": \"sara\",\n    \"email\": \"saraamrs12@gmail.com\",\n    \"role\": \"admin\",\n    \"phone number\": null,\n    \"image\": null\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "edit my profle",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/editProfile?phone_num=0111",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "editProfile"
+              ],
+              "query": [
+                {
+                  "key": "phone_num",
+                  "value": "0111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add number to my profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_secret_0irh}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/addPhone?phone_num={{admin}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "addPhone"
+              ],
+              "query": [
+                {
+                  "key": "phone_num",
+                  "value": "{{admin}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add image to my profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "postman-cloud:///1f175937-d282-4020-9623-fe959c242baf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/addImage",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "addImage"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show any profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/profiles/8",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "profiles",
+                "8"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "show any profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/api/profiles/8",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "profiles",
+                    "8"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "connection",
+                  "value": "close"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "PHP/8.2.12"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "date",
+                  "value": "Mon, 05 Oct 2026 02:18:52 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"profile\": {\n    \"id\": 8,\n    \"name\": \"sara\",\n    \"email\": \"saraamr12@gmail.com1\",\n    \"role\": \"user\",\n    \"phone number\": null,\n    \"image\": null\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
