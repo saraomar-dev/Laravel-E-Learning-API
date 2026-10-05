@@ -18,7 +18,7 @@ The project focuses on building a structured backend with real-world business ru
 
 The API can be explored and manually tested using the provided Postman collection.
 
-📁 **Postman Collection:** `Add your Postman link here`
+📁 **Postman Collection:** `https://documenter.getpostman.com/view/56053649/2sBYHNXiHM`
 
 The collection includes endpoints for:
 
