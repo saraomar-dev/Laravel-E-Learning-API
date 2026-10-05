@@ -649,8 +649,3 @@ Possible future extensions include:
 
 Backend Developer focused on building structured, secure, and scalable RESTful APIs with **Laravel and PHP**.
 
-* GitHub: [@saraomar-dev](https://github.com/saraomar-dev)
-
----
-
-⭐ If you find this project useful, consider giving it a star.
